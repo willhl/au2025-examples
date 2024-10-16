@@ -29,7 +29,7 @@ subscription SpaceUpdated {
         
         return True
     
-    async def runForSocketTypeName(self, varName, mvhrTypeName, eventResult):
+    async def runForTypeName(self, varName, mvhrTypeName, eventResult):
         try:
           value_prv = eventResult["spaceUpdated"]["previousState"][varName]
           value_new = eventResult["spaceUpdated"]["updatedSpace"][varName]
@@ -38,7 +38,7 @@ subscription SpaceUpdated {
           projectId = await Query.GetProjectIdForSpaceId(spaceId, self.graphqlClient)
           entityTypes = await Query.GetMVHRTypesForProject(projectId, self.graphqlClient)
 
-          # We're only going to create sockets if needed, not delete them
+          # We're only going to create an mvhr if needed, not delete them
           if (value_prv != value_new):
 
             mvhrTypeId = Utils.getIdByName(entityTypes, mvhrTypeName)          
@@ -67,7 +67,7 @@ subscription SpaceUpdated {
         return True
 
     async def RunBehaviour(self, eventResult):        
-        await self.runForSocketTypeName("Space_Ventilation_Strategy", "MVHR Generic", eventResult)
+        await self.runForTypeName("Space_Ventilation_Strategy", "MVHR Generic", eventResult)
         return True
 
     def GetSocketTypes(self):

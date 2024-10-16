@@ -44,22 +44,21 @@ subscription SpaceUpdated {
           projectId = await Query.GetProjectIdForSpaceId(spaceId, self.graphqlClient)
           entityTypes = await Query.GetSocketTypesForProject(projectId, self.graphqlClient)
 
-          # We're only going to create sockets if needed, not delete them
-          if (True):#numberOf230v_prv != numberOf230v_new):
-            typeId_230vsocket = Utils.getIdByName(entityTypes, socketType)          
-            all30vSockets = await Query.GetSocketsInSpace(spaceId, typeId_230vsocket, self.graphqlClient)
-            countOf230vSockets = len(all30vSockets)
+          # We're only going to create sockets if needed, not delete them         
+          typeId_230vsocket = Utils.getIdByName(entityTypes, socketType)          
+          all30vSockets = await Query.GetSocketsInSpace(spaceId, typeId_230vsocket, self.graphqlClient)
+          countOf230vSockets = len(all30vSockets)
 
-            numberOf230v_needed = numberOf230v_new - countOf230vSockets
-            
-            if (numberOf230v_needed <= 0): return False
+          numberOf230v_needed = numberOf230v_new - countOf230vSockets
+          
+          if (numberOf230v_needed <= 0): return False
 
-            print(f"Creating {numberOf230v_needed} of {socketType} with type Id {typeId_230vsocket} in space {spaceId}")
+          print(f"Creating {numberOf230v_needed} of {socketType} with type Id {typeId_230vsocket} in space {spaceId}")
 
-            # create an array of items to numberOf230v_needed
-            for i in range(numberOf230v_needed):
-              print(f"Creating {socketType} {i + 1} in space {spaceId}")
-              mutResult = await Mutate.AddSocketToSpace(spaceId, typeId_230vsocket, f"Socket {countOf230vSockets + i + 1}", self.graphqlClient)
+          # create an array of items to numberOf230v_needed
+          for i in range(numberOf230v_needed):
+            print(f"Creating {socketType} {i + 1} in space {spaceId}")
+            mutResult = await Mutate.AddSocketToSpace(spaceId, typeId_230vsocket, f"Socket {countOf230vSockets + i + 1}", self.graphqlClient)
 
         except Exception as e:
           print(e)
