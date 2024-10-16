@@ -1,7 +1,7 @@
 
 # AU2024 Examples
 
-This reposity contains example Python code demonstrated at my AU 2024 talk on Event Driven design.
+This repository contains example Python code demonstrated at my AU 2024 talk on Event Driven design.
 
 It consists of Python code for: 
  - Microsoft authenticaion service client (MSAL)
